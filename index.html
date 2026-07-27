@@ -438,6 +438,11 @@
             font-size: 1.5rem;
             font-weight: 900;
             cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .counter-btn:active {
+            transform: scale(0.9);
         }
 
         .counter-value {
@@ -458,6 +463,12 @@
             font-size: 1.2rem;
             font-weight: 700;
             cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
         }
 
         footer {
@@ -594,7 +605,7 @@
                     Աշտարակ քաղաք
                 </p>
                 <a href="https://maps.app.goo.gl/A7XSEtNrUai4ECUh9?g_st=iw" target="_blank" class="maps-btn">
-                    <i class="fas fa-location-arrow"></i> ԻՆՉԵ՞Ս ՀԱՍՆԵԼ
+                    <i class="fas fa-location-arrow"></i> ԻՆՉՊԵ՞Ս ՀԱՍՆԵԼ
                 </a>
             </div>
         </div>
@@ -636,7 +647,7 @@
 
                 <div class="form-group">
                     <label><i class="fas fa-comment-dots"></i> Մեկնաբանություն</label>
-                    <textarea class="form-control" id="guestComment" placeholder="Ալերգիա, հատուկ ցանկություններ..."></textarea>
+                    <textarea class="form-control" id="guestComment" rows="3" placeholder="Ալերգիա, հատուկ ցանկություններ..."></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">
@@ -653,7 +664,7 @@
     </footer>
 
     <script>
-        // Countdown Timer
+        // 1. Countdown Timer (ՈՒՂՂՎԱԾ)
         const eventDate = new Date("2026-07-29T17:30:00").getTime();
 
         function updateCountdown() {
@@ -669,18 +680,17 @@
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+            
+            // ՈՒՂՂՈՒՄ. Հեռացվել է "seconds"-ի տողը, քանի որ HTML-ում այն չկար և առաջացնում էր JS սխալ:
             document.getElementById("days").innerText = String(days).padStart(2, '0');
             document.getElementById("hours").innerText = String(hours).padStart(2, '0');
             document.getElementById("minutes").innerText = String(minutes).padStart(2, '0');
-            document.getElementById("seconds").innerText = String(seconds).padStart(2, '0');
         }
 
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        // Guest Counter - ՈՒՂՂՎԱԾ ՏԱՐԲԵՐԱԿ
+        // 2. Guest Counter (ԱՇԽԱՏՈՂ ՏԱՐԲԵՐԱԿ)
         let guestCounts = {
             adults: 0,
             children: 0
@@ -704,7 +714,7 @@
             }
         }
 
-        // Form Submit - ՈԻՂՂՎԱԾ ՏԱՐԲԵԱԿ
+        // 3. Form Submit (ՈՒՂՂՎԱԾ ԵՎ ԲԱՐԵԼԱՎՎԱԾ)
         document.getElementById('rsvpForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -726,8 +736,8 @@
             let message = '*ԱՆՐԻ 10-ԱՄՅԱԿԻ ՀԱՍՏԱՏՈՒՄ* ⚽\n\n';
             message += '👤 *Անուն:* ' + guestName + '\n';
             message += '👨‍👩‍👧‍👦 *Մեծահասակներ:* ' + adults + '\n';
-            message += ' *Երեխաներ:* ' + children + '\n';
-            message += ' *Ընդհանուր:* ' + (adults + children) + ' հոգի\n';
+            message += '👶 *Երեխաներ:* ' + children + '\n';
+            message += '👥 *Ընդհանուր:* ' + (adults + children) + ' հոգի\n';
             
             if (comment) {
                 message += '\n💬 *Մեկնաբանություն:* ' + comment + '\n';
@@ -739,7 +749,6 @@
             const whatsappURL = 'https://wa.me/' + phoneNumber + '?text=' + encodeURIComponent(message);
             
             window.open(whatsappURL, '_blank');
-            alert('✅ Շնորհակալություն! WhatsApp-ը կբացվի ձեր հաստատմամբ։');
         });
     </script>
 </body>
